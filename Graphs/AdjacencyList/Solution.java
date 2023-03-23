@@ -55,5 +55,15 @@ public class Solution {
 
         // Space complexity: O(V+E)
         // in worst case: O(V^2): There are V^2 edges in fully connnected graph.
+
+
+        /*The outer for loop runs V times, which is the number of vertices. Within each iteration of the loop, the inner for loop runs Eadj times, which is the number of adjacent vertices for the current vertex. Therefore, the total number of iterations of the inner loop is equal to the sum of the sizes of all the adjacency lists, which is equal to the number of edges in the graph.
+
+The statements marked as (1) are executed V times, and each of these statements has a time complexity of O(1). The statements inside the inner loop are executed E times, where E is the total number of edges in the graph, and each of these statements has a time complexity of O(1). Therefore, the overall time complexity of the printGraph method is O(V+E).
+
+The space complexity of the implementation is O(V+E) because we are using an adjacency list to represent the graph, which requires V lists to store the adjacency information for each vertex, and E elements to store the adjacency information for all edges.
+         * 
+         * 
+         */
     }
 }
