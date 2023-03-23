@@ -46,11 +46,14 @@ public class Solution {
             System.out.println("");
         }
 
-        // complexity: O(V*Eadj) = O(E) [total number of edges]
+        // Time complexity: O(V*Eadj) = O(E) [total number of edges]
 
         // V*(1+Eadv+1+1)
         //V+V*Eadj+V+V
         //3V + E
-        //(V+E)
+        //T.C = (V+E)
+
+        // Space complexity: O(V+E)
+        // in worst case: O(V^2): There are V^2 edges in fully connnected graph.
     }
 }
