@@ -44,6 +44,7 @@ public class Solution {
        dist[src] = 0;
 
        while(queue.size()!=0) {
+
         int current = queue.poll();  
         System.out.print(current+"->");
 
@@ -69,7 +70,9 @@ public class Solution {
             System.out.println("Predecessor of node "+i+" is "+pred[i]);
        }
     
+
     }
+
 
     static void addEdges(ArrayList<ArrayList<Integer>> adj, int s, int d) {
 
