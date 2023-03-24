@@ -45,7 +45,7 @@ public class Solution {
 
         System.out.println("\n\n\n----------------------------DFS traversal------------------\n");
 
-        System.out.println("The given graph has "+components+" number of components");
+        System.out.println("The given graph has "+components+" components");
         for(int i=0; i<ansDFS.size();i ++) {
              System.out.print(ansDFS.get(i)+" ");
         }
