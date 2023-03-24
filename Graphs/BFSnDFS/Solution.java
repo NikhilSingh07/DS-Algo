@@ -1,11 +1,11 @@
-package Graphs.BFS;
+package Graphs.BFSnDFS;
 import java.util.*;
 
 public class Solution {
     
     public static void main(String[] args) {
 
-        int V = 6;
+        int V = 8;
         int src = 1;
         int dest = 6;
     
@@ -22,13 +22,47 @@ public class Solution {
         addEdges(adj, 3, 4);
         addEdges(adj, 4, 5);
         addEdges(adj, 4, 6);
+        addEdges(adj, 7, 8);
+        
 
        // printGraph(adj);
 
+       System.out.println("\n\n\n----------------------------BFS traversal------------------\n");
         BFS(adj, src, dest);
+
+        ArrayList<Integer> ansDFS = new ArrayList<>();
+        boolean visited[] = new boolean[V+1];
+        int components = 0;
+
+        for(int i=1; i<visited.length; i++) {
+                
+            if(!visited[i]) {
+                components++;
+                DFS(adj, i, visited, ansDFS);
+            }
+        }
+       // DFS(adj, src, visited, ansDFS);
+
+        System.out.println("\n\n\n----------------------------DFS traversal------------------\n");
+
+        System.out.println("The given graph has "+components+" number of components");
+        for(int i=0; i<ansDFS.size();i ++) {
+             System.out.print(ansDFS.get(i)+" ");
+        }
 
     }
 
+    static void DFS( ArrayList<ArrayList<Integer>> adj, int src, boolean [] visited, ArrayList<Integer> ans ) {
+
+        visited[src] = true;
+        ans.add(src);
+
+        for(Integer neighbor: adj.get(src)) {
+            if(!visited[neighbor]) {
+                DFS(adj, neighbor, visited, ans);
+            }
+        }
+    }
 
     static void BFS(ArrayList<ArrayList<Integer>> adj, int src, int dest) {
 
