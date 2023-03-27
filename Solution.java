@@ -6,6 +6,42 @@ public class Solution {
     static int rate = -1;
     static int pindex = -1;
 
+
+    static int getMaxIndex(double arr[][], int col) {
+        
+      double maxValue = Double.MIN_VALUE;
+      int index =0;
+      
+      for(int i=0; i<arr[0].length; i++) {
+          
+          if((arr[col][i]) > maxValue ){
+              maxValue = arr[col][i];
+              index = i;
+          }
+
+      }
+      return index;
+      
+  }
+
+  static double getMaxValue(double arr[][], int col) {
+        
+    double maxValue = Double.MIN_VALUE;
+    int index =0;
+    
+    for(int i=0; i<arr[0].length; i++) {
+        
+        if((arr[col][i]) > maxValue ){
+            maxValue = arr[col][i];
+            index = i;
+        }
+
+    }
+    return maxValue;
+    
+}
+
+
     public static double maxVal(double[][] arr, int i, int j)
     {
         if (i >= arr.length || i < 0 || j >= arr[i].length || j < 0) return 0;
@@ -16,13 +52,10 @@ public class Solution {
 
     static double Profit(double arr[][], double ans[][], int m ,int n) {
 
-        double profit = 0;
+        double profit = 1;
         double rate = 0;
 
-       // System.out.println("Profit called");
-
          if(n==0)  {
-           // System.out.println("n==0:return");
             return 0;
          }
 
@@ -31,15 +64,17 @@ public class Solution {
             rate = arr[m][n]/ arr[m][n-1];
             ans[m][n] = rate;
             pindex = m;
-            return profit+= maxVal(ans,m ,n);
+            return profit*= maxVal(ans,m ,n);
            
          }
 
-        // for(int j=n; j>=0; j--) {
+         for(int j=n; j>=0; j--) {
          
             for(int i =0 ; i<=m; i++) {
 
-                profit= Profit(arr, ans, i, n-1);
+              profit = 1;
+
+                profit = Profit(arr, ans, i, n-1);
 
                 if(i == pindex) {
                     
@@ -52,14 +87,11 @@ public class Solution {
                     ans[i][n] = (1-f)*rate;
                 }
 
-                profit+= maxVal(ans,i ,n);
-
+                pindex = getMaxIndex(ans, m);
 
             }
-       
-            System.out.println("for n = "+n+ ", profit: "+profit);
-
-       //  }
+            profit*= getMaxValue(ans,m);
+        }
 
 
          return profit;
@@ -80,6 +112,13 @@ public class Solution {
           Arrays.fill(row, 0);
 
       System.out.println(Profit(arr, ans, m-1, n-1)); 
+
+      for(int i=0; i<m; i++) {
+        for(int j=0; j<n; j++) {
+          System.out.print(ans[i][j]+" ");
+        }
+        System.out.println();
+      }
     
     }
 }
