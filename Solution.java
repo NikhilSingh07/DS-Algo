@@ -21,7 +21,7 @@ public class Solution {
 
        // System.out.println("Profit called");
 
-         if(n<=0)  {
+         if(n==0)  {
            // System.out.println("n==0:return");
             return 0;
          }
@@ -30,6 +30,9 @@ public class Solution {
 
             rate = arr[m][n]/ arr[m][n-1];
             ans[m][n] = rate;
+            pindex = m;
+            return profit+= maxVal(ans,m ,n);
+           
          }
 
         // for(int j=n; j>=0; j--) {
@@ -50,6 +53,7 @@ public class Solution {
                 }
 
                 profit+= maxVal(ans,i ,n);
+
 
             }
        
