@@ -24,10 +24,15 @@ public class Solution {
       
   }
 
-  static double getMaxValue(double arr[][], int col) {
+  static double getMaxValue(double arr[][], int col, int row, double[][] memo) {
         
     double maxValue = Double.MIN_VALUE;
     int index =0;
+
+    // if(memo[col][row]!=0) {
+    //   return memo[col][row];
+    // }
+
     
     for(int i=0; i<arr[0].length; i++) {
         
@@ -37,24 +42,29 @@ public class Solution {
         }
 
     }
+   // memo[col][row] = maxValue;
+    //return memo[col][row];
     return maxValue;
-    
 }
 
-
-    public static double maxVal(double[][] arr, int i, int j)
+    public static double maxVal(double[][] arr, int i, int j, double[][] memo)
     {
+
         if (i >= arr.length || i < 0 || j >= arr[i].length || j < 0) return 0;
-        double right = maxVal(arr, i, j + 1);
-        double bottom = maxVal(arr, i + 1, j);
-        return arr[i][j] + Math.max(right, bottom);
+
+        double right = maxVal(arr, i, j + 1, memo);
+        double bottom = maxVal(arr, i + 1, j, memo);
+
+        //memo[i][j] = arr[i][j] + Math.max(right, bottom);
+       // return memo[i][j];
+
+       return arr[i][j] + Math.max(right, bottom);
     }
 
-    static double Profit(double arr[][], double ans[][], int m ,int n) {
+    static double Profit(double arr[][], double ans[][], int m ,int n, double [][] memo) {
 
         double profit = 1;
         double rate = 0;
-
          if(n==0)  {
             return 0;
          }
@@ -64,7 +74,8 @@ public class Solution {
             rate = arr[m][n]/ arr[m][n-1];
             ans[m][n] = rate;
             pindex = m;
-            return profit*= maxVal(ans,m ,n);
+
+          return profit*= maxVal(ans,m ,n,memo);
            
          }
 
@@ -74,7 +85,8 @@ public class Solution {
 
               profit = 1;
 
-                profit = Profit(arr, ans, i, n-1);
+              if(memo[i][j]==0) 
+                profit = Profit(arr, ans, i, n-1,memo);
 
                 if(i == pindex) {
                     
@@ -87,14 +99,15 @@ public class Solution {
                     ans[i][n] = (1-f)*rate;
                 }
 
-                pindex = getMaxIndex(ans, m);
-
+               pindex = getMaxIndex(ans, m);
             }
-            profit*= getMaxValue(ans,m);
+
+            profit*= getMaxValue(ans,m, j, memo);
+            memo[m][n] = profit;
         }
 
 
-         return profit;
+         return memo[m][n];
     }
 
     public static void main(String[] args) {
@@ -106,12 +119,17 @@ public class Solution {
                                   {100, 95, 100, 105, 100}
                                  };
 
-        double ans[][] = new double[m][n];       
+        double ans[][] = new double[m][n];      
+        double memo[][] = new double[m][n]; 
         
         for (double[] row: ans)
           Arrays.fill(row, 0);
 
-      System.out.println(Profit(arr, ans, m-1, n-1)); 
+          for (double[] row: memo)
+          Arrays.fill(row, 0);
+
+
+      System.out.println(Profit(arr, ans, m-1, n-1, memo)); 
 
       for(int i=0; i<m; i++) {
         for(int j=0; j<n; j++) {
@@ -119,6 +137,12 @@ public class Solution {
         }
         System.out.println();
       }
+
+      // for(int i=0; i<m; i++) {
+      //   for(int j=0; j<n; j++) {
+      //     System.out.print(memo[i][j]+" ");
+      //   }
+      //   System.out.println();
+      }
     
     }
-}
