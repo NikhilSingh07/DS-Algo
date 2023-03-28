@@ -28,10 +28,6 @@ public class Solution {
     double maxValue = Double.MIN_VALUE;
     int index = 0;
 
-    // if(memo[col][row]!=0) {
-    // return memo[col][row];
-    // }
-
     for (int i = 0; i < arr[0].length; i++) {
 
       if ((arr[col][i]) > maxValue) {
@@ -40,8 +36,7 @@ public class Solution {
       }
 
     }
-    // memo[col][row] = maxValue;
-    // return memo[col][row];
+
     return maxValue;
   }
 
@@ -50,12 +45,8 @@ public class Solution {
     if (i >= arr.length || i < 0 || j >= arr[i].length || j < 0)
       return 0;
 
-     // if(memo[i][j]!=0) return memo[i][j];
     double right = maxVal(arr, i, j + 1, memo);
     double bottom = maxVal(arr, i + 1, j, memo);
-
-    //  memo[i][j] = arr[i][j] + Math.max(right, bottom);
-    //  return memo[i][j];
 
     return arr[i][j] + Math.max(right, bottom);
   }
