@@ -106,6 +106,7 @@ public class Solution {
 
     int m = 3;
     int n = 5;
+    int amount = 10000;
     double arr[][] = new double[][] { { 10, 20, 40, 1, 1 },
         { 20, 22, 24, 26, 28 },
         { 100, 95, 100, 105, 100 }
@@ -119,8 +120,11 @@ public class Solution {
 
     for (double[] row : memo)
       Arrays.fill(row, 0);
+      
+      double answer = Profit(arr, ans, m - 1, n - 1, memo);
 
-    System.out.println("\n\nfinal ans: "+Profit(arr, ans, m - 1, n - 1, memo)+"\n");
+    System.out.println("\n\nfinal ans: "+answer+"\n");
+    System.out.println("\noptimal amount after 4 months will be: "+amount*answer+"\n");
 
 
     System.out.println("\nrate change results\n");
