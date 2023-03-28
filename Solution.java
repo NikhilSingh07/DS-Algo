@@ -50,11 +50,12 @@ public class Solution {
     if (i >= arr.length || i < 0 || j >= arr[i].length || j < 0)
       return 0;
 
+     // if(memo[i][j]!=0) return memo[i][j];
     double right = maxVal(arr, i, j + 1, memo);
     double bottom = maxVal(arr, i + 1, j, memo);
 
-    // memo[i][j] = arr[i][j] + Math.max(right, bottom);
-    // return memo[i][j];
+    //  memo[i][j] = arr[i][j] + Math.max(right, bottom);
+    //  return memo[i][j];
 
     return arr[i][j] + Math.max(right, bottom);
   }
@@ -99,6 +100,8 @@ public class Solution {
           pindex = getMaxIndex(ans, m);
           profit *= getMaxValue(ans, m, j, memo);
           memo[m][n] = profit;
+        } else {
+         // System.out.println("oh yess its already calcaulated and saved in memo");
         }
 
       }
@@ -126,7 +129,10 @@ public class Solution {
     for (double[] row : memo)
       Arrays.fill(row, 0);
 
-    System.out.println(Profit(arr, ans, m - 1, n - 1, memo));
+    System.out.println("\n\nfinal ans: "+Profit(arr, ans, m - 1, n - 1, memo)+"\n");
+
+
+    System.out.println("\nrate change results\n");
 
     for (int i = 0; i < m; i++) {
       for (int j = 0; j < n; j++) {
@@ -135,12 +141,13 @@ public class Solution {
       System.out.println();
     }
 
-    // for(int i=0; i<m; i++) {
-    // for(int j=0; j<n; j++) {
-    // System.out.print(memo[i][j]+" ");
-    // }
-    // System.out.println();
-    // }
+    System.out.println("\nmemoization records\n");
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        System.out.print(memo[i][j] + " ");
+      }
+      System.out.println();
+    }
 
   }
 }
