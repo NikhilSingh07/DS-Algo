@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Solution {
 
-  static double f = 0.1;
+  static double f = 0.01;
   static int rate = -1;
   static int pindex = -1;
 
@@ -76,7 +76,9 @@ public class Solution {
         profit = 1;
 
         if (memo[i][j] == 0) {
+
           profit = Profit(arr, ans, i, n - 1, memo);
+
           if (i == pindex) {
 
             rate = arr[i][n] / arr[i][n - 1];
@@ -86,6 +88,7 @@ public class Solution {
 
             rate = arr[i][n] / arr[i][n - 1];
             ans[i][n] = (1 - f) * rate;
+            System.out.println(rate);
           }
 
           pindex = getMaxIndex(ans, m);
