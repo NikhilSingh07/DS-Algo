@@ -52,9 +52,8 @@ public class Solution {
     }
 
 }
-
 class Node{
-
+// Tree node
     Node left, right;
     int data;
 
