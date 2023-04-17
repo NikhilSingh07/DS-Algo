@@ -12,7 +12,40 @@ public class Solution {
         int height = getHeight(root);
        // System.out.println("height of the tree is: "+height);
 
-        printLevelOrder(root, height);      // Time complexity is O(n^2) using recursion.
+        //printLevelOrder(root, height);      // Time complexity is O(n^2) using recursion.
+        levelOrderUsingQueue(root);           // Time complexity is  O(n) using Queue data structure
+        // print each level in a different line.
+    }
+
+    static void levelOrderUsingQueue(Node root) {
+
+        Queue<Node> queue = new LinkedList<>();
+
+        queue.add(root);
+        queue.add(null); // to print each level in a different line.
+
+        while(!queue.isEmpty()){    // O(n)
+
+            Node curr = queue.poll();
+            if(curr == null) {
+                if(queue.isEmpty()) return;
+                else {
+                    queue.add(null);
+                }
+                System.out.println();
+                continue;
+            }
+
+            System.out.print(curr.data+" ");
+
+            if(curr.left!=null) {
+                queue.add(curr.left);
+            }
+            if(curr.right!=null){
+                queue.add(curr.right);
+            }
+        }
+
     }
 
     static void printLevelOrder(Node root, int height){   // T(n) = O(n^2)
@@ -26,7 +59,6 @@ public class Solution {
 
             getCurrentLevel(root, i);          //O(n)*O(n)
         }
-
 
     }
 
@@ -47,6 +79,8 @@ public class Solution {
 
 
     }
+
+
     static int getHeight(Node root) {
 
         if(root == null)
