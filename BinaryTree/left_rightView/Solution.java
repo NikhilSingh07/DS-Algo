@@ -22,7 +22,7 @@ public class Solution {
 
         leftViewUtil(root,1);   // O(n)
         maxLevel = 0;
-        rightViewUtil(root,1);  // O(n)
+        rightViewUtil(root,0);  // O(n)
 
         System.out.println("left view: ");
         for (Node node : list) {           // O(n)
@@ -41,9 +41,8 @@ public class Solution {
 
         if(root == null) return;
 
-        if(maxLevel< level) {           // constant
-            listr.add(root);
-            maxLevel = level;
+        if(listr.size()<=level) {           // constant
+            listr.add(level,root);
         }
 
         rightViewUtil(root.right, level+1);        // T(n/2)
