@@ -24,4 +24,81 @@ class Solution {
         return count;
          
     }
+
+
+    /*  USING BRUTE FORCE APPROACH, TC: O(n2), AS: O(1)   
+
+    public static void main(String[] args) {
+        
+        int arr[] = new int[] {10, 15, -5, 15, -10, 5};
+        int currsum = 0;
+        int sum = 5;
+        int sindex = -1;
+        int eindex = -1;
+        
+        for(int i=0; i<arr.length-1; i++) {
+            
+            currsum = arr[i];
+            
+            for(int j = i+1; j<arr.length; j++) {
+                
+                currsum = currsum + arr[j];
+                
+                if(currsum == sum) {
+                    sindex = i;
+                    eindex = j;
+                    break;
+                } 
+   
+            }
+            
+            if(eindex!=-1) break;
+        }
+        
+        System.out.println(sindex+" "+eindex);
+        
+    }   */
+
+
+    /*    
+    
+    HASHMAP: TC: O(n), AS: O(n)
+
+    public static void main(String[] args) {
+        
+        int arr[] = new int[] {10, 15, -5, 15, -10, 5};
+        int sum =20;
+        int currsum = 0;
+        int sindex = -1;
+        int eindex = -1;
+        
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        for(int i=0; i<arr.length; i++) {   // TC: O(n), AS: O(n)
+            
+            currsum = currsum + arr[i];
+            map.put(currsum, i);
+            
+            if((currsum - sum) ==0 ) {
+                sindex = 0;
+                eindex = i;
+                break;
+            }
+        
+            if(map.containsKey(currsum-sum)) {
+                
+                sindex = map.get(currsum-sum) + 1;
+                eindex = i;
+                break;
+            }
+        }
+        
+        if(eindex!=-1) {
+            System.out.println(sindex+" "+eindex);
+        } else {
+            System.out.println("subarray not found!!");
+        }
+        
+        
+    } */
 }
