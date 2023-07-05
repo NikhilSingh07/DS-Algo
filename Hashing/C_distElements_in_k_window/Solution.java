@@ -18,13 +18,19 @@ public class Solution {
 
         int i=0;
 
+        // Adding the first window in the hashmap
+        // Here, the key is the element itself and value is the count of the occurence of the element in the map.
+
         for (i=0; i<k; i++) {
 
             map.put(arr[i], map.getOrDefault(arr[i], 0)+1);
         }
+
         System.out.println(map.size());
 
         for(i=k; i<arr.length; i++) {
+
+            //Here, using a sliding window technique. Removing the first element if count is 1, else decrementing the count.
 
             if( map.get(arr[i-k]) == 1 ) {
                map.remove(arr[i-k]);
@@ -33,7 +39,9 @@ public class Solution {
                 map.put(arr[i-k], map.getOrDefault(arr[i-k],0)-1);
             }
 
+            // Adding the current element in the map, with count as 0 if not present before, or count= count+1, if already present as key.
             map.put(arr[i], map.getOrDefault(arr[i], 0)+1);
+
             System.out.println(map.size());
         }
 
