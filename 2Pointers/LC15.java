@@ -1,4 +1,4 @@
-package 2Pointers;
+import java.util.*;
 
 // https://leetcode.com/problems/3sum/ -M 
 
