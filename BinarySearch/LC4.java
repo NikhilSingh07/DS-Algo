@@ -24,7 +24,7 @@ public class LC4 {
     
             int pos =0;
     
-            // comparing both the arrays and storing the smaller element in the new array.
+            // comparing both the arrays and storing the smaller element in the new array
             while(i<n1 && j <n2) {
     
                 if(nums1[i]<=nums2[j]) {
