@@ -17,9 +17,6 @@ public class gfgEncodeDecode {
 
         for(int i=0; i<s.length; i++) {
 
-import java.util.ArrayList;
-import java.util.List;
-
             sb.append("#");
             sb.append(s[i]);
         }
