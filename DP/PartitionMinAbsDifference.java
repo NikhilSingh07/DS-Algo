@@ -1,7 +1,4 @@
 public class PartitionMinAbsDifference {
-    
-
-    
 
 // Recursion: TC: O(2^n)
 // SC: O(n)
