@@ -34,6 +34,11 @@ private static boolean tabSubset(int n, int t, int []arr, boolean [][]dp){
         dp[i][0] = true;
     }
 
+    // at any index if target is 0
+    for(int i = 0; i<=n; i++) {
+        dp[i][0] = true;
+    }
+
     // when ind == 0  and target is equal to arr[0]
     if(t>= arr[0]) dp[0][arr[0]] = true;
 
