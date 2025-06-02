@@ -6,9 +6,12 @@
 
 public class LC123 {
 
-        // > This problem is an extenstion of part II 
+
+    // > This problem is an extenstion of part II 
     // > Here, we have a cap of 2 transactions.
     // > Therefore, we need to use another state variable.
+
+    // ------------------  Apporach 1: Using 3 State Variables -------------------------
 
     // > The problem says to return the max profit we can generate by making 2 transactions as a whole 
     // > 3 State variables are:  index, buy_status and capacity
@@ -140,24 +143,12 @@ public class LC123 {
         return next[1][2];
     }
 
-    // Optimising it to O(n*4) instead
-    // Here, we can make atmost 2 transactions
-    // 0 1 2 3
-    // at indices 0,1 -> we can store the results of 1st transaction
-    // 2,3 -> results of 2nd transactions
 
-    // This way, we can avoid using buy state variable: 
-    // if even the it means we can buy else sell
-
-    // WE can use 2 state variables only, index = n and transaction no ( 0 to 4)
-    // base case: if(n ==n || transaction == 4) return 0;
-    // if transaction %2 == 0 buy cases
-    // else sell
-    // Using this approach, we can write memo, tab, tabwith space optimisation
-    // In the end the TC: O(n*4)
-    // SC: O(n*4)
-    
+// Main function     
     public int maxProfit(int[] prices) {
+
+        // Appoach 1: using 3 state variables
+        /*
 
         int cap = 2;
 
@@ -178,7 +169,179 @@ public class LC123 {
         return tabProfit(cap,prices,dp); */
 
         // tabulation with space optimisation
-        return tabWithSpaceOptProfit(prices);
+        //return tabWithSpaceOptProfit(prices);
+
+        // Approach 2: Using 2 state variables only
+
+        // Memoization 
+        /*
+        int n = prices.length;
+        int [][]dp = new int[n][4];
+        for(int []row: dp) {
+            Arrays.fill(row, -1);
+        }
+        return memoProfit2(0, 0, prices, dp);
+        */
+
+        // Tabulation
+        //return tabProfit2(prices);
+
+        // Tabulation with space optimisation
+        return tabWithSpaceOptProfit2(prices);
+    }
+
+
+
+    // -------------Approach 2: Using 2 State variables only -----------------------
+
+    /*
+    // Optimising it to O(n*4) instead
+    // Here, we can make atmost 2 transactions
+    // 0 1 2 3
+    // at indices 0,1 -> we can store the results of 1st transaction
+    // 2,3 -> results of 2nd transactions
+
+    // This way, we can avoid using buy state variable: 
+    // if even then it means we can buy else sell
+
+    // WE can use 2 state variables only, index = n and transaction no ( 0 to 4)
+    // base case: if(n ==n || transaction == 4) return 0;
+    // if transaction %2 == 0 buy cases
+    // else sell
+    // Using this approach, we can write memo, tab, tabwith space optimisation
+    // In the end the TC: O(n*4)
+    // SC: O(n*4)
+    
+     */
+
+    // Memoization Technique: 
+    // TC: O(n*4)
+    // SC: O(n*4) + O(n)
+    private int memoProfit2(int n, int op_no, int [] prices, int[][]dp) {
+
+        // base cases: if cap == 0 || n == n
+
+        if(op_no == 4) return 0;
+        if(n == prices.length) return 0;
+
+        // memoization
+        if(dp[n][op_no]!=-1) return dp[n][op_no];
+
+        if(op_no % 2 == 0){ // have liberty to buy a stack: as no transaction is going on
+            // cap will remain same as the transaction is not finished yet.
+
+            int buy_p = -prices[n] + memoProfit2(n+1,op_no+1, prices, dp);
+            int not_buy = 0 + memoProfit2(n+1, op_no, prices, dp);
+
+            return dp[n][op_no] = Math.max(buy_p, not_buy);
+        
+        } else {
+            
+            int sell = prices[n] + memoProfit2(n+1, op_no+1, prices, dp); // transaction is finished: cap--
+            int not_sell =  0 + memoProfit2(n+1, op_no, prices, dp);
+
+            return dp[n][op_no] = Math.max(sell, not_sell);
+        }
+    }
+
+    // Tabulation code:
+    // TC: O(n*5)
+    // SC: O(n*5)
+
+    private int tabProfit2(int []prices) {
+
+        int n = prices.length;
+        int dp[][] = new int [n+1][5];
+
+        // bottom cases
+        // 1. op_no = 4
+
+        for(int i=0; i<=n; i++) {
+            dp[i][4] =  0;
+        }
+
+        // 2. when ind = n
+        for(int j = 0; j<=4; j++) {
+            dp[n][j] = 0;
+        }
+
+        // Handling the state variables
+        for(int i = n-1; i>=0; i--) {
+            for(int j = 4; j>=0; j--)  {
+
+                if(j % 2 == 0) { // have liberty to buy
+
+                    int buy = 0;
+
+                    if(j+1 <= 4) buy = - prices[i] + dp[i+1][j+1];
+                    int not_buy = 0 + dp[i+1][j];
+
+                    dp[i][j] = Math.max(buy, not_buy);
+                
+                } else {
+
+                    int sell = 0;
+
+                    if(j+1 <= 4) sell = prices[i] + dp[i+1][j+1];
+                    int not_sell = 0 + dp[i+1][j];
+
+                    dp[i][j] = Math.max(sell, not_sell);
+                }
+            }
+        }
+
+        return dp[0][0];
+    }
+
+    // Tabulation with space optimisation
+    // TC:O(n*5)
+    // SC: O(n*5*2)
+    private int tabWithSpaceOptProfit2(int []prices) {
+
+        int n = prices.length;
+        int next[] = new int[5];
+
+        // bottom cases
+        // 1. op_no = 4
+
+        for(int i=0; i<=n; i++) {
+            next[4] =  0;
+        }
+
+        // 2. when ind = n
+        for(int j = 0; j<=4; j++) {
+            next[j] = 0;
+        }
+
+        // Handling the state variables
+        for(int i = n-1; i>=0; i--) {
+            int curr[] = new int[5];
+
+            for(int j = 4; j>=0; j--)  {
+
+                if(j % 2 == 0) { // have liberty to buy
+
+                    int buy = 0;
+
+                    if(j+1 <= 4) buy = - prices[i] + next[j+1];
+                    int not_buy = 0 + next[j];
+
+                    curr[j] = Math.max(buy, not_buy);
+                
+                } else {
+
+                    int sell = 0;
+
+                    if(j+1 <= 4) sell = prices[i] + next[j+1];
+                    int not_sell = 0 + next[j];
+
+                    curr[j] = Math.max(sell, not_sell);
+                }
+            }
+            next = curr;
+        }
+
+        return next[0];
     }
     
 }
