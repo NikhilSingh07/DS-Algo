@@ -241,10 +241,8 @@ class Solution {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
-        }
 
-        for(int i=0 ; i<n; i++) {
-            max = Math.max(dp[i], max);
+            max = Math.max(max, dp[i]);
         }
 
         return max;
