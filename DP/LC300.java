@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class LC300 {
     
 /* 
@@ -46,6 +48,11 @@ add 10 -> replace 9<->10 -> replace 2<->9 ->add 5 -> replace 3<->5 ->add 7 -> ad
 temp array [2, 3, 7, 18]
 len = 4 (final ans for length)
 
+
+
+
+Approach 4: Tabulation with a single 1D array
+           > at each index, store the length of LIS ending at that index
 
  */
 
@@ -218,6 +225,29 @@ class Solution {
         // Tabulation with Space Opt
         //return tabWithSpaceOptLIS(nums, offset);
 
-        return BinarySearchLIS(nums);
+        // return BinarySearchLIS(nums);
+
+        // Tabulation with space optimisation
+        // SC: O(n)
+        
+        int []dp = new int[n];
+        int max =0;
+        Arrays.fill(dp, 1);
+
+        for(int i=1; i<n; i++) {
+            for(int j=0; j<i; j++) {
+
+                if(nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+
+        for(int i=0 ; i<n; i++) {
+            max = Math.max(dp[i], max);
+        }
+
+        return max;
+    }
     }
 }
