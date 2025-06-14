@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Comparator;
 
 
@@ -147,6 +148,39 @@ public class LC1048 {
             ans = Math.max(ans, prev[j]);
         }
         return ans;   
+    }
+
+
+        // Here, in memo, I went from 0 to n. Therefore, here's the tabulation.  
+    private int func(String []words, int[][]dp) {
+
+        int n = words.length;
+        // bottom case: when ind == n
+        for(int p = -1; p<n; p++) {
+            dp[n][p+1] = 0;
+        }
+
+        for(int ind = n-1; ind>=0; ind--) {
+            for(int p = n-1; p>=-1; p--) {
+
+                // +1 is for the offset
+                int np = 0 + dp[ind+1][p+1];
+
+                int pk = 0;
+                if(p == -1 || isValid(words[p], words[ind])) {
+
+                    // +1 offset should be applied to all the p indices
+                    pk = 1 + dp[ind+1][ind+1];
+                }
+
+                dp[ind][p + 1] = Math.max(np, pk);
+            }
+        }
+        
+        for(int e: dp[0]) {
+            System.out.println(e+", ");
+        }
+        return dp[0][-1+1]; // return max chain len from the entire word list
     }
 
 

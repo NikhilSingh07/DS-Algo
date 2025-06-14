@@ -7,7 +7,7 @@ import java.util.Arrays;
 public record LC673() {
 
 
-        // Using the LIS logic 
+    // Using the LIS logic 
     // using a count array to store the the count of subsequences ending at index i
     // compute the total no. of LIS by adding the count of indces where dp[i] = maxLen or LIS
 
